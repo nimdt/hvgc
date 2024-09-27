@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huon Valley Golf Club Payment Portal</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS for styling -->
+    <link rel="stylesheet" href="css/style.css"> <!-- Link to external CSS for styling -->
     <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script> <!-- Square SDK -->
 </head>
 <body>
     <!-- Club Logo Above the Form Container -->
     <div class="logo">
-        <img src="HVG_logo.png" alt="Huon Valley Golf Club Logo">
+        <img src="images/HVG_logo.png" alt="Huon Valley Golf Club Logo">
     </div>
     
     <div class="container">
@@ -42,11 +42,24 @@
                 <input type="checkbox" id="buggie" name="hireOptions" value="5"> Buggie Hire - $5
             </div>
 
-            <!-- Square Payment Form -->
+            <!-- Payment Method Selection -->
+            <div class="form-group">
+                <label>Payment Method</label><br>
+                <input type="radio" id="cardPayment" name="paymentMethod" value="card" checked> Pay with Card<br>
+                <input type="radio" id="cashPayment" name="paymentMethod" value="cash"> Pay with Cash (Enter Voucher Number)
+            </div>
+
+            <!-- Voucher Number Field (Hidden by default) -->
+            <div class="form-group" id="voucherField" style="display:none;">
+                <label for="voucherNumber">Payment Voucher Number</label>
+                <input type="text" id="voucherNumber" name="voucherNumber" placeholder="Enter your payment voucher number">
+            </div>
+
+            <!-- Square Payment Form (Hidden for cash payment) -->
             <div id="card-container"></div> <!-- Square Payment Form Element -->
 
-            <!-- Submit Button for Payment -->
-            <button id="card-button" type="button">Pay Now</button>
+            <!-- Submit Button -->
+            <button id="submitButton" type="submit">Proceed to Payment</button>
         </form>
 
         <div id="responseMessage"></div>
@@ -58,7 +71,7 @@
             </button>
         </div>
 
-        <!-- New Links Section -->
+        <!-- Links Section -->
         <div class="links">
             <p><a href="https://hvgolfclub.com.au/membership/" target="_blank">Apply for Membership</a></p>
             <p><a href="https://hvgolfclub.com.au/visitors/" target="_blank">Visitors Information</a></p>
@@ -66,6 +79,6 @@
     </div>
 
     <!-- Link to JavaScript -->
-    <script src="payment.js"></script>
+    <script src="js/payment.js"></script> <!-- Updated JS path -->
 </body>
 </html>
