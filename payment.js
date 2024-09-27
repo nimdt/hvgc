@@ -6,6 +6,9 @@ document.getElementById('paymentForm').addEventListener('submit', function(event
     const phoneNumber = document.getElementById('phoneNumber').value;
     const email = document.getElementById('email').value;
 
+    // Generate a mock MAC address for the demo
+    const macAddress = generateMockMacAddress();
+
     // Calculate total payment amount based on visitor status and hire options
     let totalAmount = 30; // Default visitor fee
     if (document.getElementById('clubs').checked) totalAmount += parseInt(document.getElementById('clubs').value);
@@ -21,47 +24,47 @@ document.getElementById('paymentForm').addEventListener('submit', function(event
         return;
     }
 
-    // Process payment for non-members using Square
-    processPayment(fullName, phoneNumber, email, totalAmount);
-});
-
-// Initialize Square Payments
-const payments = Square.payments('YOUR_APPLICATION_ID', 'YOUR_LOCATION_ID');
-
-// Function to initialize and display the Square card payment form
-async function initializeCard(payments) {
-    const card = await payments.card(); // Create a new card object
-    await card.attach('#card-container'); // Attach card form to the container on the page
-    return card;
-}
-
-// Function to tokenize and handle the payment
-async function tokenize(paymentMethod) {
-    const result = await paymentMethod.tokenize();
-    
-    // If the tokenization is successful, you will get a token to process the payment
-    if (result.status === 'OK') {
-        alert('Payment successful! Token: ' + result.token);
-        // Normally, you would send the token to your backend for payment processing
-    } else {
-        alert('Payment failed: ' + result.errors[0].message);
+    // Mock check for existing MAC address to prevent multiple charges in one day
+    if (checkIfMacExists(macAddress)) {
+        alert('You have already paid for today.');
+        return;
     }
-}
 
-// Initialize the card payment form
-const card = await initializeCard(payments);
-
-// Event listener for the "Pay Now" button
-document.getElementById('card-button').addEventListener('click', async function() {
-    await tokenize(card); // Tokenize and handle payment when "Pay Now" is clicked
+    // Process payment for non-members using Square
+    processPayment(fullName, phoneNumber, email, totalAmount, macAddress);
 });
 
-function processPayment(name, phone, email, amount) {
-    // This function now initializes the Square payment form
-    alert(`Proceeding to payment of $${amount} for ${name}. Please enter your card details...`);
+// Function to generate a mock MAC address (for demo purposes)
+function generateMockMacAddress() {
+    const hexDigits = "0123456789ABCDEF";
+    let macAddress = "";
+    for (let i = 0; i < 6; i++) {
+        macAddress += hexDigits.charAt(Math.floor(Math.random() * 16));
+        macAddress += hexDigits.charAt(Math.floor(Math.random() * 16));
+        if (i !== 5) macAddress += ":";
+    }
+    return macAddress;
+}
 
-    // Simulate successful payment (you would process with Square)
-    document.getElementById('responseMessage').innerText = `Payment of $${amount} was successful!`;
+// Function to simulate MAC address check
+let macDatabase = {}; // Mock storage for MAC addresses
+
+function checkIfMacExists(macAddress) {
+    const today = new Date().toLocaleDateString();
+    return macDatabase[macAddress] && macDatabase[macAddress] === today;
+}
+
+// Function to process payment and log the MAC address
+function processPayment(name, phone, email, amount, macAddress) {
+    // Log the MAC address with the current date
+    const today = new Date().toLocaleDateString();
+    macDatabase[macAddress] = today;
+
+    // Simulate payment processing
+    alert(`Processing payment of $${amount} for ${name}. MAC Address: ${macAddress}`);
+    
+    // Simulate successful payment
+    document.getElementById('responseMessage').innerText = `Payment of $${amount} was successful! MAC Address logged: ${macAddress}`;
 }
 
 function toggleMemberInput() {
