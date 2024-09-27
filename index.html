@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huon Valley Golf Club Payment Portal</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS for styling -->
+    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script> <!-- Square SDK -->
+</head>
+<body>
+    <!-- Club Logo Above the Form Container -->
+    <div class="logo">
+        <img src="HVG_logo.png" alt="Huon Valley Golf Club Logo">
+    </div>
+    
+    <div class="container">
+        <!-- Page Title -->
+        <h1>Green Fees Payment</h1>
+
+        <!-- Payment Form -->
+        <form id="paymentForm">
+            <!-- Visitor Details -->
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Equipment Hire Options -->
+            <div class="form-group">
+                <label for="hireOptions">Additional Hire Options</label>
+                <input type="checkbox" id="clubs" name="hireOptions" value="5"> Clubs Hire - $5<br>
+                <input type="checkbox" id="buggie" name="hireOptions" value="5"> Buggie Hire - $5
+            </div>
+
+            <!-- Square Payment Form -->
+            <div id="card-container"></div> <!-- Square Payment Form Element -->
+
+            <!-- Submit Button for Payment -->
+            <button id="card-button" type="button">Pay Now</button>
+        </form>
+
+        <div id="responseMessage"></div>
+
+        <!-- Direct Member Portal Button -->
+        <div class="links">
+            <button onclick="window.location.href='https://hvgolfclub.thymesoft.net';" class="member-button">
+                I am a Member - Go to Member Portal
+            </button>
+        </div>
+
+        <!-- New Links Section -->
+        <div class="links">
+            <p><a href="https://hvgolfclub.com.au/membership/" target="_blank">Apply for Membership</a></p>
+            <p><a href="https://hvgolfclub.com.au/visitors/" target="_blank">Visitors Information</a></p>
+        </div>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="payment.js"></script>
+</body>
+</html>
