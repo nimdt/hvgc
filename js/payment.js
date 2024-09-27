@@ -5,15 +5,18 @@ document.getElementById('paymentForm').addEventListener('submit', function(event
     const fullName = document.getElementById('fullName').value;
     const phoneNumber = document.getElementById('phoneNumber').value;
     const email = document.getElementById('email').value;
-
+    
+    // Check if visitor is over 18
+    const isOver18 = document.getElementById('over18').checked;
+    
     // Determine payment method
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
     // If paying with cash, handle voucher number
     if (paymentMethod === 'cash') {
         const voucherNumber = document.getElementById('voucherNumber').value;
-        if (!voucherNumber) {
-            alert('Please enter your payment voucher number.');
+        if (!voucherNumber || voucherNumber.length !== 4 || isNaN(voucherNumber)) {
+            alert('Please enter a valid 4-digit payment voucher number.');
             return;
         }
 
@@ -23,14 +26,14 @@ document.getElementById('paymentForm').addEventListener('submit', function(event
         return;
     }
 
-    // If paying with card, continue to process the payment through Square
-    const totalAmount = calculateTotalAmount(); // Assume you have a function to calculate total
+    // Calculate total amount
+    let totalAmount = calculateTotalAmount(isOver18); // Pass the over-18 status to the function
     processPayment(fullName, phoneNumber, email, totalAmount);
 });
 
-// Function to calculate total amount (you can adjust this as needed)
-function calculateTotalAmount() {
-    let totalAmount = 30; // Default visitor fee
+// Function to calculate total amount based on over-18 checkbox
+function calculateTotalAmount(isOver18) {
+    let totalAmount = isOver18 ? 30 : 10; // $30 if over 18, otherwise $10
     if (document.getElementById('clubs').checked) totalAmount += parseInt(document.getElementById('clubs').value);
     if (document.getElementById('buggie').checked) totalAmount += parseInt(document.getElementById('buggie').value);
     return totalAmount;

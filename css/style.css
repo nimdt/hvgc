@@ -19,7 +19,21 @@ body {
     height: auto; /* Ensures the aspect ratio is maintained */
     margin-bottom: 20px; /* Add space between the logo and the form */
 }
+/* Styling for the large checkbox and label */
+.large-checkbox {
+    font-size: 1.1em;
+    padding: 10px 0;
+}
 
+.large-input {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.large-label {
+    font-size: 1.5em;
+}
 .member-button {
     display: block;
     width: 100%;
