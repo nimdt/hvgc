@@ -1,7 +1,7 @@
 /* Body Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url('images/Aerial-Photo-Feature.jpg'); /* Updated file path */
+    background-image: url('Aerial-Photo-Feature.jpg'); /* Updated file path */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
