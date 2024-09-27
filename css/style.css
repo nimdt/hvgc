@@ -1,0 +1,122 @@
+/* Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('images/Aerial-Photo-Feature.jpg'); /* Updated file path */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    text-align: center; /* Center everything */
+}
+
+/* Club Logo Styling for Responsive Scaling */
+.logo img {
+    display: block;
+    margin: 0 auto;
+    max-width: 50%; /* Set max-width as a percentage for responsiveness */
+    height: auto; /* Ensures the aspect ratio is maintained */
+    margin-bottom: 20px; /* Add space between the logo and the form */
+}
+
+.member-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #004d40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.member-button:hover {
+    background-color: #00695c;
+}
+
+/* Main Container */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Light opacity background */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: left; /* Align form fields to the left */
+}
+
+/* Heading Styles */
+h1 {
+    color: #004d40; /* Dark green color from the homepage */
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    color: #004d40;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding is inside the width */
+    margin-bottom: 10px;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Button Styles */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #004d40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #00695c;
+}
+
+/* Response Message */
+#responseMessage {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #004d40;
+    font-size: 1.1em;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5em;
