@@ -19,55 +19,49 @@
 
         <!-- Payment Form -->
         <form id="paymentForm">
-            <!-- Visitor Details -->
-            <div class="form-group">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" name="fullName" required>
+            <!-- Player 1 Details -->
+            <div class="player" data-player="1">
+                <h3>Player 1</h3>
+                <div class="form-group">
+                    <label for="fullName1">Full Name</label>
+                    <input type="text" id="fullName1" name="fullName1" required>
+                </div>
+                <div class="form-group">
+                    <label for="email1">Email</label>
+                    <input type="email" id="email1" name="email1" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber1">Phone Number</label>
+                    <input type="tel" id="phoneNumber1" name="phoneNumber1" required>
+                </div>
+                <div class="form-group">
+                    <label for="ageGroup1">Please select the player's age:</label>
+                    <select id="ageGroup1" name="ageGroup1" required onchange="calculateTotal()">
+                        <option value="">Select age group</option>
+                        <option value="under18">Under 18</option>
+                        <option value="18-25">18 - 25</option>
+                        <option value="25-45">25 - 45</option>
+                        <option value="45-65">45 - 65</option>
+                        <option value="65plus">65+</option>
+                    </select>
+                </div>
+                <!-- Hire options for Player 1 -->
+                <div class="form-group">
+                    <label for="hireOptions1">Additional Hire Options</label>
+                    <input type="checkbox" id="clubs1" name="hireOptions1" value="5" onchange="calculateTotal()"> Clubs Hire - $5<br>
+                    <input type="checkbox" id="buggie1" name="hireOptions1" value="5" onchange="calculateTotal()"> Buggie Hire - $5
+                    <p><small>*Must give 2 days notice for hire options. Call 03 6264 1737.</small></p>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required>
-            </div>
+            <!-- Section to add additional players -->
+            <div id="additionalPlayers"></div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+            <!-- Button to add another player -->
+            <button type="button" id="addPlayerButton">Add Another Player</button>
 
-            <!-- Age Confirmation -->
-            <div class="form-group large-checkbox">
-                <label for="over18" class="large-label">I am over 18</label>
-                <input type="checkbox" id="over18" name="over18" class="large-input">
-            </div>
-
-            <!-- Equipment Hire Options -->
-            <div class="form-group">
-                <label for="hireOptions">Additional Hire Options</label>
-                <input type="checkbox" id="clubs" name="hireOptions" value="5"> Clubs Hire - $5<br>
-                <input type="checkbox" id="buggie" name="hireOptions" value="5"> Buggie Hire - $5
-                <p><small>*Must give 2 days notice for hire options. Call 03 6264 1737.</small></p>
-                <p><a href="https://hvgolfclub.com.au/contact-us/" target="_blank">Contact Us</a></p> <!-- Contact link added -->
-            </div>
-
-            <!-- Payment Method Selection -->
-            <div class="form-group">
-                <label>Payment Method</label><br>
-                <input type="radio" id="cardPayment" name="paymentMethod" value="card" checked> Pay with Card<br>
-                <input type="radio" id="cashPayment" name="paymentMethod" value="cash"> Pay with Cash (Enter Voucher Number)
-            </div>
-
-            <!-- Voucher Number Field (Hidden by default) -->
-            <div class="form-group" id="voucherField" style="display:none;">
-                <label for="voucherNumber">Payment Voucher Number</label>
-                <input type="text" id="voucherNumber" name="voucherNumber" placeholder="Enter your payment voucher number">
-                <br>
-                <!-- Link to Cash Payment Instructions -->
-                <a href="cash-instruction.html" target="_blank">How to Pay Cash</a>
-            </div>
-
-            <!-- Square Payment Form (Hidden for cash payment) -->
-            <div id="card-container"></div> <!-- Square Payment Form Element -->
+            <!-- Total Amount Display (Positioned above the 'Proceed to Payment' button) -->
+            <p id="totalDisplay" style="font-weight: bold;">Total: $0</p> <!-- Initial total is $0 -->
 
             <!-- Submit Button -->
             <button id="submitButton" type="submit">Proceed to Payment</button>
@@ -75,12 +69,18 @@
 
         <div id="responseMessage"></div>
 
-        <!-- Direct Member Portal Button -->
-        <div class="links">
-            <button onclick="window.location.href='https://hvgolfclub.thymesoft.net';" class="member-button">
-                I am a Member - Go to Member Portal
-            </button>
+        <!-- Membership Verification Section -->
+        <div class="form-group">
+            <label for="membershipNumber">I am a Member: Enter Your Membership Number</label>
+            <input type="text" id="membershipNumber" name="membershipNumber">
+            <button type="button" id="verifyMember">Verify Membership</button>
+            <p id="memberStatusMessage"></p>
         </div>
+
+        <!-- Direct Member Portal Button (disabled until verified) -->
+        <button id="memberPortalButton" type="button" style="display: none;" onclick="goToMemberPortal();">
+            Go to Member Portal
+        </button>
 
         <!-- Links Section -->
         <div class="links">
@@ -90,7 +90,8 @@
     </div>
 
     <!-- Link to JavaScript -->
-    <script src="js/payment.js"></script> <!-- Updated JS path -->
+    <script src="js/payment.js"></script> <!-- For Payment Handling -->
+    <script src="js/membershipVerification.js"></script> <!-- Membership Verification -->
     <p><a href="privacy.html">Privacy Policy</a></p>
 </body>
 </html>

@@ -1,58 +1,154 @@
+let playerCount = 1;
+let totalAmount = 0; // Initialize the total amount
+
+// Function to calculate the total amount based on player selections
+function calculateTotal() {
+    totalAmount = 0; // Reset total amount
+    
+    // Loop through all players, starting with Player 1
+    for (let i = 1; i <= playerCount; i++) {
+        const ageGroup = document.getElementById(`ageGroup${i}`)?.value;
+        if (ageGroup === "under18") {
+            totalAmount += 10; // Under 18: $10
+        } else if (ageGroup) {
+            totalAmount += 30; // 18 and older: $30
+        }
+
+        // Add hire options costs
+        const clubs = document.getElementById(`clubs${i}`)?.checked ? parseInt(document.getElementById(`clubs${i}`).value) : 0;
+        const buggie = document.getElementById(`buggie${i}`)?.checked ? parseInt(document.getElementById(`buggie${i}`).value) : 0;
+        totalAmount += clubs + buggie;
+    }
+
+    updateTotalDisplay(); // Update the displayed total
+}
+
+// Update the total display on the page
+function updateTotalDisplay() {
+    document.getElementById('totalDisplay').innerText = `Total: $${totalAmount}`;
+}
+
+// Add Player Button functionality
+document.getElementById('addPlayerButton').addEventListener('click', function() {
+    playerCount++;
+    const additionalPlayers = document.getElementById('additionalPlayers');
+    
+    // Create new fields for the additional player
+    const newPlayerDiv = document.createElement('div');
+    newPlayerDiv.classList.add('player');
+    newPlayerDiv.dataset.player = playerCount;
+    newPlayerDiv.id = `player${playerCount}`; // Assign an ID to each player div
+    
+    newPlayerDiv.innerHTML = `
+        <h3>Player ${playerCount}</h3>
+        <div class="form-group">
+            <label for="fullName${playerCount}">Full Name</label>
+            <input type="text" id="fullName${playerCount}" name="fullName${playerCount}" required>
+        </div>
+        <div class="form-group">
+            <label for="email${playerCount}">Email (Optional)</label>
+            <input type="email" id="email${playerCount}" name="email${playerCount}">
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber${playerCount}">Phone Number (Optional)</label>
+            <input type="tel" id="phoneNumber${playerCount}" name="phoneNumber${playerCount}">
+        </div>
+        <div class="form-group">
+            <label for="ageGroup${playerCount}">Please select the player's age:</label>
+            <select id="ageGroup${playerCount}" name="ageGroup${playerCount}" required onchange="calculateTotal()">
+                <option value="">Select age group</option>
+                <option value="under18">Under 18</option>
+                <option value="18-25">18 - 25</option>
+                <option value="25-45">25 - 45</option>
+                <option value="45-65">45 - 65</option>
+                <option value="65plus">65+</option>
+            </select>
+        </div>
+        <!-- Hire options for each player -->
+        <div class="form-group">
+            <label for="hireOptions${playerCount}">Additional Hire Options</label>
+            <input type="checkbox" id="clubs${playerCount}" name="hireOptions${playerCount}" value="5" onchange="calculateTotal()"> Clubs Hire - $5<br>
+            <input type="checkbox" id="buggie${playerCount}" name="hireOptions${playerCount}" value="5" onchange="calculateTotal()"> Buggie Hire - $5
+            <p><small>*Must give 2 days notice for hire options. Call 03 6264 1737.</small></p>
+        </div>
+        <button type="button" class="removePlayerButton" onclick="removePlayer(${playerCount})">Remove Player</button>
+    `;
+    additionalPlayers.appendChild(newPlayerDiv);
+    calculateTotal(); // Update the total when a new player is added
+});
+
+// Function to remove a player
+function removePlayer(playerId) {
+    const playerDiv = document.getElementById(`player${playerId}`);
+    if (playerDiv) {
+        playerDiv.remove(); // Remove the player div
+        calculateTotal(); // Recalculate the total
+    }
+}
+
+// Handle form submission
 document.getElementById('paymentForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form from submitting the default way
 
-    // Get form values
-    const fullName = document.getElementById('fullName').value;
-    const phoneNumber = document.getElementById('phoneNumber').value;
-    const email = document.getElementById('email').value;
-    
-    // Check if visitor is over 18
-    const isOver18 = document.getElementById('over18').checked;
-    
-    // Determine payment method
-    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    let playerData = [];
 
-    // If paying with cash, handle voucher number
-    if (paymentMethod === 'cash') {
-        const voucherNumber = document.getElementById('voucherNumber').value;
-        if (!voucherNumber || voucherNumber.length !== 4 || isNaN(voucherNumber)) {
-            alert('Please enter a valid 4-digit payment voucher number.');
-            return;
-        }
+    // Ensure Player 1 information is filled out
+    const fullName1 = document.getElementById('fullName1').value;
+    const email1 = document.getElementById('email1').value;
+    const phoneNumber1 = document.getElementById('phoneNumber1').value;
+    const ageGroup1 = document.getElementById('ageGroup1').value;
 
-        // Process cash payment (for demo, we log the voucher number)
-        alert(`Payment of cash with voucher number ${voucherNumber} recorded for ${fullName}.`);
-        document.getElementById('responseMessage').innerText = `Cash payment recorded. Voucher number: ${voucherNumber}`;
-        return;
+    if (!fullName1 || !email1 || !phoneNumber1 || !ageGroup1) {
+        alert('Player 1 information is required!');
+        return; // Stop form submission if Player 1 information is incomplete
     }
 
-    // Calculate total amount
-    let totalAmount = calculateTotalAmount(isOver18); // Pass the over-18 status to the function
-    processPayment(fullName, phoneNumber, email, totalAmount);
-});
-
-// Function to calculate total amount based on over-18 checkbox
-function calculateTotalAmount(isOver18) {
-    let totalAmount = isOver18 ? 30 : 10; // $30 if over 18, otherwise $10
-    if (document.getElementById('clubs').checked) totalAmount += parseInt(document.getElementById('clubs').value);
-    if (document.getElementById('buggie').checked) totalAmount += parseInt(document.getElementById('buggie').value);
-    return totalAmount;
-}
-
-// Show/Hide voucher number field based on payment method
-document.querySelectorAll('input[name="paymentMethod"]').forEach((element) => {
-    element.addEventListener('change', function() {
-        if (this.value === 'cash') {
-            document.getElementById('voucherField').style.display = 'block';
-            document.getElementById('card-container').style.display = 'none'; // Hide card payment form
-        } else {
-            document.getElementById('voucherField').style.display = 'none';
-            document.getElementById('card-container').style.display = 'block'; // Show card payment form
+    // Add Player 1 to player data
+    playerData.push({
+        fullName: fullName1,
+        email: email1,
+        phoneNumber: phoneNumber1,
+        ageGroup: ageGroup1,
+        hireOptions: {
+            clubs: document.getElementById('clubs1').checked ? 5 : 0,
+            buggie: document.getElementById('buggie1').checked ? 5 : 0
         }
     });
+
+    // Loop through all additional players
+    for (let i = 2; i <= playerCount; i++) {
+        const fullName = document.getElementById(`fullName${i}`)?.value;
+        const email = document.getElementById(`email${i}`)?.value;
+        const phoneNumber = document.getElementById(`phoneNumber${i}`)?.value;
+        const ageGroup = document.getElementById(`ageGroup${i}`)?.value;
+
+        if (fullName && ageGroup) {
+            // Collect player data for processing
+            playerData.push({
+                fullName: fullName,
+                email: email || 'N/A', // Optional email
+                phoneNumber: phoneNumber || 'N/A', // Optional phone number
+                ageGroup: ageGroup,
+                hireOptions: {
+                    clubs: document.getElementById(`clubs${i}`)?.checked ? 5 : 0,
+                    buggie: document.getElementById(`buggie${i}`)?.checked ? 5 : 0
+                }
+            });
+        }
+    }
+
+    // Process payment for non-members and display player information
+    processPayment(totalAmount, playerData);
 });
 
-function processPayment(name, phone, email, amount) {
-    // This function handles card payments with Square (already implemented)
-    alert(`Processing card payment of $${amount} for ${name}.`);
+function processPayment(totalAmount, playerData) {
+    let playersInfo = "";
+    playerData.forEach(player => {
+        playersInfo += `\nPlayer: ${player.fullName}, Email: ${player.email}, Phone: ${player.phoneNumber}, Age Group: ${player.ageGroup}, Clubs: ${player.hireOptions.clubs}, Buggie: ${player.hireOptions.buggie}`;
+    });
+
+    alert(`Processing payment of $${totalAmount} for the following players: ${playersInfo}`);
+
+    // Simulate a successful payment
+    document.getElementById('responseMessage').innerText = `Payment of $${totalAmount} was successful for the following players: ${playersInfo}`;
 }
