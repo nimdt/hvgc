@@ -13,6 +13,16 @@ function toggleVoucherField() {
     }
 }
 
+// Function to validate the voucher number (must be exactly 4 digits)
+function validateVoucherNumber() {
+    const voucherNumber = document.getElementById('voucherNumber').value;
+    if (voucherNumber.length !== 4 || isNaN(voucherNumber)) {
+        alert("Please enter a valid 4-digit voucher number.");
+        return false;
+    }
+    return true;
+}
+
 // Function to calculate the total amount based on player selections
 function calculateTotal() {
     totalAmount = 0; // Reset total amount
@@ -102,65 +112,21 @@ function removePlayer(playerId) {
 document.getElementById('paymentForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form from submitting the default way
 
-    let playerData = [];
+    const cashPayment = document.getElementById('cashPayment').checked;
 
-    // Ensure Player 1 information is filled out
-    const fullName1 = document.getElementById('fullName1').value;
-    const email1 = document.getElementById('email1').value;
-    const phoneNumber1 = document.getElementById('phoneNumber1').value;
-    const ageGroup1 = document.getElementById('ageGroup1').value;
-
-    if (!fullName1 || !email1 || !phoneNumber1 || !ageGroup1) {
-        alert('Player 1 information is required!');
-        return; // Stop form submission if Player 1 information is incomplete
+    // If paying by cash, validate the voucher number
+    if (cashPayment) {
+        if (!validateVoucherNumber()) {
+            return; // Stop if voucher number is invalid
+        }
+        alert(`Please pay a total of $${totalAmount} in cash and place the voucher with your number.`);
+        document.getElementById('responseMessage').innerText = `Payment of $${totalAmount} to be made in cash. Voucher number recorded.`;
+        return;
     }
 
-    // Add Player 1 to player data
-    playerData.push({
-        fullName: fullName1,
-        email: email1,
-        phoneNumber: phoneNumber1,
-        ageGroup: ageGroup1,
-        hireOptions: {
-            clubs: document.getElementById('clubs1').checked ? 5 : 0,
-            buggie: document.getElementById('buggie1').checked ? 5 : 0
-        }
-    });
+    // If paying by card, proceed to Square payment process (Square API integration needed here)
+    alert(`Proceeding to card payment for $${totalAmount}`);
+    // Square API processing code goes here
 
-    // Loop through all additional players
-    for (let i = 2; i <= playerCount; i++) {
-        const fullName = document.getElementById(`fullName${i}`)?.value;
-        const email = document.getElementById(`email${i}`)?.value;
-        const phoneNumber = document.getElementById(`phoneNumber${i}`)?.value;
-        const ageGroup = document.getElementById(`ageGroup${i}`)?.value;
-
-        if (fullName && ageGroup) {
-            // Collect player data for processing
-            playerData.push({
-                fullName: fullName,
-                email: email || 'N/A', // Optional email
-                phoneNumber: phoneNumber || 'N/A', // Optional phone number
-                ageGroup: ageGroup,
-                hireOptions: {
-                    clubs: document.getElementById(`clubs${i}`)?.checked ? 5 : 0,
-                    buggie: document.getElementById(`buggie${i}`)?.checked ? 5 : 0
-                }
-            });
-        }
-    }
-
-    // Process payment for non-members and display player information
-    processPayment(totalAmount, playerData);
+    document.getElementById('responseMessage').innerText = `Payment of $${totalAmount} was successful!`;
 });
-
-function processPayment(totalAmount, playerData) {
-    let playersInfo = "";
-    playerData.forEach(player => {
-        playersInfo += `\nPlayer: ${player.fullName}, Email: ${player.email}, Phone: ${player.phoneNumber}, Age Group: ${player.ageGroup}, Clubs: ${player.hireOptions.clubs}, Buggie: ${player.hireOptions.buggie}`;
-    });
-
-    alert(`Processing payment of $${totalAmount} for the following players: ${playersInfo}`);
-
-    // Simulate a successful payment
-    document.getElementById('responseMessage').innerText = `Payment of $${totalAmount} was successful for the following players: ${playersInfo}`;
-}
