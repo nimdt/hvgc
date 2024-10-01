@@ -19,6 +19,7 @@ body {
     height: auto; /* Ensures the aspect ratio is maintained */
     margin-bottom: 20px; /* Add space between the logo and the form */
 }
+
 /* Styling for the large checkbox and label */
 .large-checkbox {
     font-size: 1.1em;
@@ -34,6 +35,8 @@ body {
 .large-label {
     font-size: 1.5em;
 }
+
+/* Member Button */
 .member-button {
     display: block;
     width: 100%;
@@ -125,6 +128,26 @@ button:hover {
     font-size: 1.1em;
 }
 
+/* Footer Styles */
+footer {
+    background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px; /* Rounded corners for the footer */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow to make it pop */
+    margin-top: 20px; /* Add some spacing above the footer */
+}
+
+footer a {
+    color: #004d40; /* Dark green color */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 768px) {
     .container {
@@ -134,3 +157,10 @@ button:hover {
 
     h1 {
         font-size: 1.5em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px;
+    }
+}
