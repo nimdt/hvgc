@@ -1,6 +1,18 @@
 let playerCount = 1;
 let totalAmount = 0; // Initialize the total amount
 
+// Function to toggle the voucher field for cash payments
+function toggleVoucherField() {
+    const voucherField = document.getElementById('voucherField');
+    const cashPayment = document.getElementById('cashPayment').checked;
+
+    if (cashPayment) {
+        voucherField.style.display = 'block'; // Show voucher field if paying by cash
+    } else {
+        voucherField.style.display = 'none'; // Hide voucher field if paying by card
+    }
+}
+
 // Function to calculate the total amount based on player selections
 function calculateTotal() {
     totalAmount = 0; // Reset total amount

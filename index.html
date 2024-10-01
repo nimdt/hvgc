@@ -60,6 +60,22 @@
             <!-- Button to add another player -->
             <button type="button" id="addPlayerButton">Add Another Player</button>
 
+            <!-- Payment Method Selection -->
+            <div class="form-group">
+                <label>Payment Method</label><br>
+                <input type="radio" id="cardPayment" name="paymentMethod" value="card" checked> Pay with Card<br>
+                <input type="radio" id="cashPayment" name="paymentMethod" value="cash" onchange="toggleVoucherField()"> Pay with Cash (Enter Voucher Number)
+            </div>
+
+            <!-- Voucher Number Field (Hidden by default) -->
+            <div class="form-group" id="voucherField" style="display:none;">
+                <label for="voucherNumber">Payment Voucher Number</label>
+                <input type="text" id="voucherNumber" name="voucherNumber" placeholder="Enter your payment voucher number">
+                <br>
+                <!-- Link to Cash Payment Instructions -->
+                <a href="cash-instruction.html" target="_blank">How to Pay Cash</a>
+            </div>
+
             <!-- Total Amount Display (Positioned above the 'Proceed to Payment' button) -->
             <p id="totalDisplay" style="font-weight: bold;">Total: $0</p> <!-- Initial total is $0 -->
 
