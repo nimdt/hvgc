@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huon Valley Golf Club Member Portal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Club Logo -->
+    <div class="logo">
+        <img src="images/HVG_logo.png" alt="Huon Valley Golf Club Logo">
+    </div>
+
+    <div class="container">
+        <!-- Page Title -->
+        <h1>Member Portal</h1>
+
+        <!-- Membership Verification Section -->
+        <div class="form-group">
+            <label for="membershipNumber">Enter Your Membership Number:</label>
+            <input type="text" id="membershipNumber" name="membershipNumber">
+            <button type="button" id="verifyMember">Verify Membership</button>
+            <p id="memberStatusMessage"></p>
+        </div>
+
+        <!-- Direct Member Portal Button (disabled until verified) -->
+        <button id="memberPortalButton" type="button" style="display: none;" onclick="goToMemberPortal();">
+            Go to Member Portal
+        </button>
+
+        <!-- Links Section -->
+        <div class="links">
+            <p><a href="https://hvgolfclub.com.au/membership/" target="_blank">Apply for Membership</a></p>
+            <p><a href="https://hvgolfclub.com.au/visitors/" target="_blank">Visitors Information</a></p>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; text-align: center;">
+        <p>Powered by</p>
+        <img src="images/mactrack logo.webp" alt="MAC TRACK Payment Portal Logo" style="width: 150px;">
+        <p>MAC TRACK Payment Portal</p>
+        <p><a href="privacy.html" style="color: #004d40;">Privacy Policy</a></p>
+    </footer>
+
+    <!-- Link to JavaScript -->
+    <script src="js/membershipVerification.js"></script> <!-- Membership Verification -->
+</body>
+</html>
